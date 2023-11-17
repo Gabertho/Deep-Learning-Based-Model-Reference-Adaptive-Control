@@ -1,10 +1,11 @@
 import numpy as np
 
 def initialization():
-    # Estados iniciais
+    #Inicialização para controlador PD (Feedback Linearization)
+    # Estados iniciais (posição e velocidade)
     x, y, z, fi = 0, 0, 0, 0
     dx, dy, dz, dfi = 0, 0, 0, 0
-
+    # Criação de vetor de estados.
     q = np.array([x, y, z, fi])
     dq = np.array([dx, dy, dz, dfi])
     d2q = np.zeros(4)

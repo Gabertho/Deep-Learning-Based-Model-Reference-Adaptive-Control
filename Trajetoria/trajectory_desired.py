@@ -30,15 +30,15 @@ def trajectory_desired(traj_des, q, dq, d2q, qf, dqf, d2qf, t, dt, traj_opt, vel
     tuple: Retorna a trajetória desejada e suas derivadas até a terceira ordem, além do tempo inicial e final atualizados.
     """
     if traj_des == 1:  # Trajetória de elipse
-        xd = A * np.cos(omg * t)
-        yd = A * np.sin(omg * t)
-        zd = (A / 2) * np.sin(omg * t)
+        xd = A * np.cos(omg * t) #Horizontal
+        yd = A * np.sin(omg * t) #Vertical
+        zd = (A / 2) * np.sin(omg * t) #Altitude
         fid = 0
-        dxd = -omg * A * np.sin(omg * t)
-        dyd = omg * A * np.cos(omg * t)
-        dzd = (omg * A / 2) * np.cos(omg * t)
+        dxd = -omg * A * np.sin(omg * t) #Velocidade eixo x
+        dyd = omg * A * np.cos(omg * t) #Velocidade eixo y
+        dzd = (omg * A / 2) * np.cos(omg * t) #Velocidade eixo z
         dfid = 0
-        d2xd = -(omg ** 2) * A * np.cos(omg * t)
+        d2xd = -(omg ** 2) * A * np.cos(omg * t) #Velocidade aceleração eixo
         d2yd = -(omg ** 2) * A * np.sin(omg * t)
         d2zd = -(omg ** 2) * (A / 2) * np.sin(omg * t)
         d2fid = 0

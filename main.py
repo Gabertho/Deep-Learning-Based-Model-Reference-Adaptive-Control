@@ -9,13 +9,17 @@ from Controle.controller_v2 import controller_v2
 def main():
     # Configurações iniciais
     control = 1  # Controlador PD com Feedback Linearization
-    traj_des = 1  # Trajetória Elipse
-    vel_d = 0.3   # Velocidade desejada
+    traj_des = 1   # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
+    vel_d = 0.3   # Velocidade desejada (m/s)
     A = 1         # Amplitude da trajetória
-    omg = vel_d / A  # Velocidade angular
-    uncertain = 1.5  # Fator de incerteza
-    wind_pct = 0     # Percentual do vento (ajuste conforme necessário)
-    tempo_voo = 20
+    omg = vel_d / A  # Velocidade angular desejada em rad/s. (v=wr - > w = v/r))
+    tempo_voo = 20 #em segundos.
+
+    # Incerteza
+    uncertain = 1.5 
+    wind_pct = 0     # Percentual do vento 
+
+    # Tempo
     dt = 0.01
     N = int(tempo_voo / dt)
 
