@@ -1,31 +1,26 @@
 import numpy as np
 
 def par_pol_f(to, tf, qo, dqo, d2qo, qf, dqf, d2qf):
-    """
-    Calcula os coeficientes de um polinômio de quinto grau.
+    # Verifique se to e tf são diferentes para evitar uma matriz singular
+    if np.isclose(to, tf):
+        print(to, tf)
+        raise ValueError("Os tempos inicial e final são muito próximos ou iguais, o que pode causar uma matriz singular.")
 
-    Args:
-    to (float): Tempo inicial.
-    tf (float): Tempo final.
-    qo (float): Posição inicial.
-    dqo (float): Velocidade inicial.
-    d2qo (float): Aceleração inicial.
-    qf (float): Posição final.
-    dqf (float): Velocidade final.
-    d2qf (float): Aceleração final.
-
-    Returns:
-    np.array: Coeficientes do polinômio.
-    """
-    q_v = np.array([qo, dqo, d2qo, qf, dqf, d2qf])
+    # Defina os vetores e a matriz
+    q_v = [qo, dqo, d2qo, qf, dqf, d2qf]
     delta_t = tf - to
 
-    A = np.array([[1, 0, 0, 0, 0, 0],
-                  [0, 1, 0, 0, 0, 0],
-                  [0, 0, 2, 0, 0, 0],
-                  [1, delta_t, delta_t**2, delta_t**3, delta_t**4, delta_t**5],
-                  [0, 1, 2*delta_t, 3*delta_t**2, 4*delta_t**3, 5*delta_t**4],
-                  [0, 0, 2, 6*delta_t, 12*delta_t**2, 20*delta_t**3]])
-    
-    return np.linalg.inv(A) @ q_v
+    A = [[1, 0, 0, 0, 0, 0],
+         [0, 1, 0, 0, 0, 0],
+         [0, 0, 2, 0, 0, 0],
+         [1, delta_t, delta_t**2, delta_t**3, delta_t**4, delta_t**5],
+         [0, 1, 2*delta_t, 3*delta_t**2, 4*delta_t**3, 5*delta_t**4],
+         [0, 0, 2, 6*delta_t, 12*delta_t**2, 20*delta_t**3]]
 
+    # Use a pseudo-inversa para calcular os coeficientes
+    try:
+        a = np.linalg.pinv(A) @ q_v
+    except np.linalg.LinAlgError:
+        raise np.linalg.LinAlgError("A matriz A é singular e não pode ser invertida.")
+
+    return a

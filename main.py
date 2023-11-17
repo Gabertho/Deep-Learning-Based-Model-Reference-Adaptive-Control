@@ -9,7 +9,7 @@ from Controle.controller_v2 import controller_v2
 def main():
     # Configurações iniciais
     control = 1  # Controlador PD com Feedback Linearization
-    traj_des = 1   # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
+    traj_des = 2   # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
     vel_d = 0.3   # Velocidade desejada (m/s)
     A = 1         # Amplitude da trajetória
     omg = vel_d / A  # Velocidade angular desejada em rad/s. (v=wr - > w = v/r))
@@ -27,12 +27,11 @@ def main():
     q, dq, d2q, v, Kp, Kd = initialization()
 
     # Valores finais desejados e parâmetros de trajetória
-    qf = np.array([0, 0, 0, 0])  # Estado final desejado
+    qf = np.array([5, 5, 5, 5])  # Estado final desejado
     dqf = np.array([0, 0, 0, 0])  # Velocidade final desejada
     d2qf = np.array([0, 0, 0, 0])  # Aceleração final desejada
-    ax, ay, az, afi = 0, 0, 0, 0  # Parâmetros para trajetória ponto a ponto
-    traj_opt = 1  # Opção de trajetória
-    to, tf = 0, 0  # Tempos inicial e final
+    ax, ay, az, afi = np.zeros(6), np.zeros(6), np.zeros(6), np.zeros(6)
+    to, tf = 0, 10000  # Tempos inicial e final
 
     # Arrays para armazenar dados para plotagem
     q_v = np.zeros((4, N))
@@ -44,7 +43,7 @@ def main():
 
         # Planejamento de trajetória
         qd, dqd, d2qd, d3qd, to, tf = trajectory_desired(
-            traj_des, q, dq, d2q, qf, dqf, d2qf, t, dt, traj_opt, vel_d, A, omg, to, tf, ax, ay, az, afi
+            traj_des, q, dq, d2q, qf, dqf, d2qf, t, dt, vel_d, A, omg, to, tf, ax, ay, az, afi, i
         )
 
         # Erro de posição e velocidade

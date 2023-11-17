@@ -4,7 +4,7 @@ from Trajetoria.traj_pol_f import traj_pol_f
 from Trajetoria.trajectory_par_pol_f import trajectory_par_pol_f
 
 
-def trajectory_desired(traj_des, q, dq, d2q, qf, dqf, d2qf, t, dt, traj_opt, vel_d, A, omg, to, tf, ax, ay, az, afi):
+def trajectory_desired(traj_des, q, dq, d2q, qf, dqf, d2qf, t, dt, vel_d, A, omg, to, tf, ax, ay, az, afi, i):
     """
     Planeja a trajetória para o drone.
 
@@ -45,11 +45,14 @@ def trajectory_desired(traj_des, q, dq, d2q, qf, dqf, d2qf, t, dt, traj_opt, vel
         d3xd = d3yd = d3zd = d3fid = 0
 
     elif traj_des == 2:  # Trajetória ponto a ponto
-        if (t / dt) == 1:
+        if i == 0:  # Atualize apenas no primeiro passo
             to = t
             td = np.linalg.norm(qf - q) / vel_d
             tf = to + td
+            if tf <= to:
+                raise ValueError("O tempo final calculado é menor ou igual ao tempo inicial.")
             ax, ay, az, afi = trajectory_par_pol_f(dt, to, tf, q, dq, d2q, qf, dqf, d2qf)
+
 
         if t <= tf:
             xd, dxd, d2xd, d3xd = traj_pol_f(ax, t, to)
