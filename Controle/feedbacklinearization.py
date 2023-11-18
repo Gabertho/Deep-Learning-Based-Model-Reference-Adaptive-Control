@@ -38,4 +38,3 @@ def feedback_linearization(q, d2q_d, u):
 
     return v_fb
 
-# Agora, você pode chamar esta função dentro da função controller_pd

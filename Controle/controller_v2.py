@@ -52,6 +52,3 @@ def controller_v2(control, Kp, Kd, q, dqd, d2qd, q_til, dq_til):
         return v, u
     else:
         raise ValueError("Tipo de controle não suportado")
-
-# Exemplo de uso
-# Defina os parâmetros necessários e chame a função controller_v2

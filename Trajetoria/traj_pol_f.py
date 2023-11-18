@@ -20,5 +20,3 @@ def traj_pol_f(a, t, to):
 
     return q, dq, d2q, d3q
 
-# Exemplo de uso
-# Defina os coeficientes do polinômio (a), o tempo atual (t) e o tempo inicial (to
