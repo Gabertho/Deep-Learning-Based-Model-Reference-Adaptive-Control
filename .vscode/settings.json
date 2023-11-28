@@ -2,6 +2,9 @@
     "python.analysis.extraPaths": [
         "./Controle",
         "./Trajetoria",
-        "./Replay"
+        "./Replay",
+        "./Drone",
+        "./NeuralNetwork",
+        "./Plots"
     ]
 }

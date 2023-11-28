@@ -1,16 +1,16 @@
 import numpy as np
-from Drone.droneDynamic import droneDynamic
+from droneDynamic import droneDynamic
 
-from Drone.initialization import initialization
-from Plots.plot3dim_control import plot3dim_control
-from Trajetoria.trajectory_desired import trajectory_desired
-from Controle.controller_v2 import controller_v2
+from initialization import initialization
+from plot3dim_control import plot3dim_control
+from trajectory_desired import trajectory_desired
+from controller_v2 import controller_v2
 
 import tensorflow as tf
 
 def main():
     # Configurações iniciais
-    control = 2  # Controlador PD com Feedback Linearization
+    control = 1  # Controlador PD com Feedback Linearization
     traj_des = 1   # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
     vel_d = 0.3   # Velocidade desejada (m/s)
     A = 1         # Amplitude da trajetória

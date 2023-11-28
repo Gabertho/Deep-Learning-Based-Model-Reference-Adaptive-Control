@@ -1,9 +1,9 @@
 from matplotlib import pyplot as plt
 import numpy as np
 import tensorflow as tf
-from Drone.refLibrary import refSignal
-from Drone.refmodel import refModel
-from Drone.wingrock import wingRock
+from refLibrary import refSignal
+from refmodel import refModel
+from wingrock import wingRock
 from NeuralNetwork.controller import MRAC
 
 def feedback_linearization(q, d2qd, dqd, u):
