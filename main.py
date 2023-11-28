@@ -6,10 +6,12 @@ from Plots.plot3dim_control import plot3dim_control
 from Trajetoria.trajectory_desired import trajectory_desired
 from Controle.controller_v2 import controller_v2
 
+import tensorflow as tf
+
 def main():
     # Configurações iniciais
-    control = 1  # Controlador PD com Feedback Linearization
-    traj_des = 2   # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
+    control = 2  # Controlador PD com Feedback Linearization
+    traj_des = 1   # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
     vel_d = 0.3   # Velocidade desejada (m/s)
     A = 1         # Amplitude da trajetória
     omg = vel_d / A  # Velocidade angular desejada em rad/s. (v=wr - > w = v/r))
@@ -50,7 +52,7 @@ def main():
         q_til = q - qd
         dq_til = dq - dqd
 
-        # Aplicando o controlador PD
+        # Aplicando o controlador PD ou DMRAC
         v, u = controller_v2(control, Kp, Kd, q, dqd, d2qd, q_til, dq_til)
 
         # Simulação da dinâmica do drone
