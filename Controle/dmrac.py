@@ -52,7 +52,7 @@ class MRAC(object):
         self.NET_PARAM = []
 
     def _placeholders(self):
-        self.state_ph = tf.placeholder(tf.float32, (None, 2), name='state')
+        self.state_ph = tf.placeholder(tf.float32, (None, self.state_dim), name='state')
         self.delta_ph = tf.placeholder(tf.float32, (None, self.action_dim), name='true_uncertainty')
         self.gradIndex = tf.placeholder(tf.int32)
 
@@ -98,7 +98,7 @@ class MRAC(object):
         for i in range(self.n_hidden_layer3):
             grads.append(self.sess.run(self.grad_fun, feed_dict={self.gradIndex:i, self.state_ph:x}))
 
-        return np.reshape(grads, (self.n_hidden_layer3,2))
+        return np.reshape(grads, (self.n_hidden_layer3,4))
         
     def total_Cntrl(self, state, ref_state, ref_signal):
         lin_cntrl = self.linear_Cntrl(state, ref_signal)

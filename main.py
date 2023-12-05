@@ -12,8 +12,8 @@ import tensorflow as tflow
 
 def main():
     # Configurações iniciais
-    control = 1  # Controlador PD com Feedback Linearization
-    traj_des = 1  # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
+    control = 2  # Controlador PD com Feedback Linearization
+    traj_des = 2  # Trajetória Elipse (1) ou Trajetória Ponto a ponto (2)
     vel_d = 0.3   # Velocidade desejada (m/s)
     A = 1         # Amplitude da trajetória
     omg = vel_d / A  # Velocidade angular desejada em rad/s. (v=wr - > w = v/r))
@@ -51,7 +51,7 @@ def main():
 
     #Rde neural 
     with tflow.Session() as sess:
-        agent = MRAC(sess,2,1,10)
+        agent = MRAC(sess,4,4)
         sess.run(tflow.global_variables_initializer())
         ref_cmd.stepCMD()
         n_idx = 0
@@ -82,7 +82,7 @@ def main():
                 adap_cntrl = agent.total_Cntrl(q, ref_env.state, ref_cmd.refsignal[n_idx])
                 ref_env.stepRefModel(ref_cmd.refsignal[n_idx])
                 n_idx = n_idx+1
-                v, u = controller_v2(control, Kp, Kd, q, dqd,d2q, q_til, dq_til, K, r, Kr, agent)
+                v, u = controller_v2(control, Kp, Kd, q, dqd,d2q, q_til, dq_til, K, ref_cmd.refsignal[n_idx], Kr, agent)
 
             # Simulação da dinâmica do drone
             d2q, dq, q, d, B = droneDynamic(t, dt, q, dq, v, tempo_voo, uncertain, wind_pct)
