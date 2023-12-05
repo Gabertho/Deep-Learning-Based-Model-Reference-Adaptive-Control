@@ -25,7 +25,7 @@ def feedback_linearization(q, d2qd, dqd, u):
     v_fb = M @ (u + d2qd)
     return v_fb
 
-def controller_v2(control, Kp, Kd, q, dqd, d2qd, q_til, dq_til):
+def controller_v2(control, Kp, Kd, q, dqd, d2qd, q_til, dq_til, K, r, Kr, agent):
     """
     Controlador PD com Feedback Linearization.
 
@@ -50,5 +50,12 @@ def controller_v2(control, Kp, Kd, q, dqd, d2qd, q_til, dq_til):
         v = vmax * np.tanh(v / vmax)
 
         return v, u
-    else:
-        raise ValueError("Tipo de controle não suportado")
+    
+    elif control == 2: #DMRAC
+        u_pd = K @ q # K  = matriz de ganho (definir c Inoue)
+        u_crm = Kr @ r #Kr = definir c Inoue valor.
+        v_ad = agent.mrac_Cntrl(q, r)
+
+        u = u_crm + u_pd - v_ad
+
+        return u 
