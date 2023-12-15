@@ -51,11 +51,3 @@ def controller_v2(control, Kp, Kd, q, dqd, d2qd, q_til, dq_til, K, r, Kr, agent)
 
         return v, u
     
-    elif control == 2: #DMRAC
-        u_pd = K @ q # K  = matriz de ganho (definir c Inoue)
-        u_crm = Kr @ r #Kr = definir c Inoue valor.
-        v_ad = agent.mrac_Cntrl(q, r)
-
-        u = u_crm + u_pd - v_ad
-
-        return u 

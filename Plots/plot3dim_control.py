@@ -20,10 +20,7 @@ def plot3dim_control(qd_v, q_v, control):
     if control == 1:  # Feedback Linearization
         cordalinha = 'g'
         label = 'PD (Feedback Linearization)'
-    else:
-        cordalinha = 'r'  # Pode ser ajustado para outros tipos de controle
-        label = 'Outro Controle'
-
+ 
     # Trajetória real
     ax.plot3D(q_v[0, :], q_v[1, :], q_v[2, :], cordalinha, linewidth=2, label=label)
 
